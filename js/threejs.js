@@ -4,7 +4,7 @@ $(document).ready(function () {
 
 	var camera, controls, scene, renderer;
 
-	var sphere, plane, sSun;
+	var sphere, plane, sSun, group;
 
 	var start = Date.now();
 	init();
@@ -48,24 +48,28 @@ $(document).ready(function () {
 		light.position.set(-350,-350,-350);
 		scene.add( light );
 
-		var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1.5 );
-            // hemiLight.color.setHSV( 0.6, 0.75, 0.5 );
-            // hemiLight.groundColor.setHSV( 0.095, 0.5, 0.5 );
-        hemiLight.position.set( 0, 0, 0 );
-        scene.add( hemiLight );
+		// var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1.5 );
+  //           // hemiLight.color.setHSV( 0.6, 0.75, 0.5 );
+  //           // hemiLight.groundColor.setHSV( 0.095, 0.5, 0.5 );
+  //       hemiLight.position.set( 0, 0, 0 );
+  //       scene.add( hemiLight );
 
-		var material1 = new THREE.MeshPhongMaterial();
-		material1.map  = THREE.ImageUtils.loadTexture('http://fanjian5i5i.github.io/images/earthmap.jpg');
-		sphere = new THREE.Mesh( new THREE.SphereGeometry(15,32,32), material1);
+		// var material1 = new THREE.MeshPhongMaterial();
+		// material1.map  = THREE.ImageUtils.loadTexture('http://fanjian5i5i.github.io/images/earthmap.jpg');
+		sphere = new THREE.Mesh( new THREE.SphereGeometry( 15, 32, 32 ), new THREE.MeshLambertMaterial( { color: 0x088a08, shading: THREE.FlatShading } ) );
+		// sphere = new THREE.Mesh( new THREE.SphereGeometry(15,32,32), material);
 		sphere.position.x = 200;
 		sphere.position.y = 200;
 		sphere.position.z = -10;
-
-
 		scene.add(sphere);
-		var material2 = new THREE.MeshPhongMaterial();
-		material2.map    = THREE.ImageUtils.loadTexture('http://fanjian5i5i.github.io/images/sun.jpg');
-		sSun = new THREE.Mesh( new THREE.SphereGeometry(50,32,32), material2);
+
+
+		// var material2 = new THREE.MeshPhongMaterial();
+		// material2.map    = THREE.ImageUtils.loadTexture('http://fanjian5i5i.github.io/images/sun.jpg');
+		var material = new THREE.MeshBasicMaterial( { color: 0xffff00, overdraw: 0.5 } );
+		material.side  = THREE.BackSide;
+		//sphere = new THREE.Mesh( new THREE.SphereGeometry(15,32,32), material);
+		sSun = new THREE.Mesh( new THREE.SphereGeometry(50,32,32), material);
 		scene.add(sSun);
 
 
@@ -325,6 +329,72 @@ $(document).ready(function () {
 		scene.add( group );
 
 
+
+		var theText = "Star with Higher Mass(Sun)";
+
+		var text3d = new THREE.TextGeometry( theText, {
+
+			size: 20,
+			height: 5,
+			curveSegments: 2,
+			font: "helvetiker"
+
+		});		
+
+		text3d.computeBoundingBox();
+		var centerOffset = -0.5 * ( text3d.boundingBox.max.x - text3d.boundingBox.min.x );
+
+		var textMaterial = new THREE.MeshBasicMaterial( { color: 0xffff00, overdraw: 0.5 } );
+		text = new THREE.Mesh( text3d, textMaterial );
+
+		text.position.x = -150;
+		text.position.y = 0;
+		text.position.z = 70;
+
+		// text.rotation.x = Math.PI/2;
+		// text.rotation.y = Math.PI/4;
+		text.rotation.x = Math.PI/2;
+
+		group = new THREE.Group();
+		group.add( text );
+
+		scene.add( group );
+
+
+
+		var theText = "Orbiting Planet(Earth)";
+
+		text3d = new THREE.TextGeometry( theText, {
+
+			size: 10,
+			height: 5,
+			curveSegments: 2,
+			font: "helvetiker"
+
+		});		
+
+		text3d.computeBoundingBox();
+		var centerOffset = -0.5 * ( text3d.boundingBox.max.x - text3d.boundingBox.min.x );
+
+		var textMaterial = new THREE.MeshBasicMaterial( { color: 0x088A08} );
+		text = new THREE.Mesh( text3d, textMaterial );
+
+		text.position.x = -70;
+		text.position.y = 20;
+		text.position.z = 30;
+
+		// text.rotation.x = Math.PI/2;
+		// text.rotation.y = Math.PI/4;
+		text.rotation.x = Math.PI/2;
+
+		group = new THREE.Group();
+		group.add( text );
+
+		scene.add( group );
+
+
+
+
 		renderer = new THREE.WebGLRenderer();
 		renderer.setSize(width,height);
 		//renderer.setClearColorHex( 0xffffff, 1 );
@@ -345,6 +415,9 @@ $(document).ready(function () {
 		sphere.rotation.y += 0.02;
 		sphere.position.y = Math.sin(timer * 0.0015) * 200;
 		sphere.position.x = Math.cos(timer * 0.0015) * 200;
+
+		group.position.y = Math.sin(timer * 0.0015) * 200;
+		group.position.x = Math.cos(timer * 0.0015) * 200;
 		//sphere.position.x +=2;
 		// sSun.rotation.x += 0.02;
 		sSun.rotation.z += 0.0125;
