@@ -18,13 +18,6 @@ $(document).ready(function () {
 		var height = window.innerHeight;
 
 		var $container = $('#container');
-		var $info = $('#info');
-
-		info.style.position ='absolute';
-		info.style.top = "10px";
-		info.style.width = "100%";
-		info.style.textAlign = "center";
-		info.innerHTML = "drag to change the view";
 
 		camera = new THREE.PerspectiveCamera(70, width/height,1,1000);
 		
@@ -61,18 +54,18 @@ $(document).ready(function () {
         hemiLight.position.set( 0, 0, 0 );
         scene.add( hemiLight );
 
-		var material = new THREE.MeshPhongMaterial();
-		material.map  = THREE.ImageUtils.loadTexture('images/earthmap.jpg');
-		sphere = new THREE.Mesh( new THREE.SphereGeometry(15,32,32), material);
+		var material1 = new THREE.MeshPhongMaterial();
+		material1.map  = THREE.ImageUtils.loadTexture('images/earthmap.jpg');
+		sphere = new THREE.Mesh( new THREE.SphereGeometry(15,32,32), material1);
 		sphere.position.x = 200;
 		sphere.position.y = 200;
 		sphere.position.z = -10;
 
 
 		scene.add(sphere);
-		var material = new THREE.MeshPhongMaterial();
-		material.map    = THREE.ImageUtils.loadTexture('images/sun.jpg');
-		sSun = new THREE.Mesh( new THREE.SphereGeometry(50,32,32), material);
+		var material2 = new THREE.MeshPhongMaterial();
+		material2.map    = THREE.ImageUtils.loadTexture('images/sun.jpg');
+		sSun = new THREE.Mesh( new THREE.SphereGeometry(50,32,32), material2);
 		scene.add(sSun);
 
 
