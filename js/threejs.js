@@ -55,7 +55,7 @@ $(document).ready(function () {
         scene.add( hemiLight );
 
 		var material1 = new THREE.MeshPhongMaterial();
-		material1.map  = THREE.ImageUtils.loadTexture('images/earthmap.jpg');
+		material1.map  = THREE.ImageUtils.loadTexture('http://fanjian5i5i.github.io/images/earthmap.jpg');
 		sphere = new THREE.Mesh( new THREE.SphereGeometry(15,32,32), material1);
 		sphere.position.x = 200;
 		sphere.position.y = 200;
@@ -64,7 +64,7 @@ $(document).ready(function () {
 
 		scene.add(sphere);
 		var material2 = new THREE.MeshPhongMaterial();
-		material2.map    = THREE.ImageUtils.loadTexture('images/sun.jpg');
+		material2.map    = THREE.ImageUtils.loadTexture('http://fanjian5i5i.github.io/images/sun.jpg');
 		sSun = new THREE.Mesh( new THREE.SphereGeometry(50,32,32), material2);
 		scene.add(sSun);
 
